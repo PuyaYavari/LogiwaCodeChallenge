@@ -23,8 +23,9 @@ namespace Merchandising.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post()
-		{
+		public IActionResult Post(
+				
+		) {
 			return new ContentResult
 			{
 				Content = "Post",

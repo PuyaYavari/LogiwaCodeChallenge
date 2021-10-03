@@ -1,3 +1,6 @@
+using Merchandising.Repositories;
+using Merchandising.Services;
+using Merchandising.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +31,11 @@ namespace Merchandising
 			services.AddApiVersioning();
 
 			services.AddSwaggerGen();
+
+			services.AddSingleton<MerchandisingContext>();
+
+			services.AddScoped<RepositoryCategory>();
+			services.AddScoped<ServiceCategory>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
