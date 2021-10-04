@@ -15,6 +15,6 @@ namespace Merchandising.Entities
 		public string Title { get; set; }
 
 		[Column("MIN_STOCK")]
-		public int MinStock { get; set; }
+		public int? MinStock { get; set; }
 	}
 }

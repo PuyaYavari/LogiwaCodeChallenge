@@ -22,19 +22,40 @@ namespace Merchandising.Controllers
 			this._service = service;
 		}
 
+		/// <summary>
+		/// Queries and returns categories from database
+		/// </summary>
+		/// <param name="id">Category ID</param>
+		/// <returns>A list of all categories if ID is null else  returns the category with the given ID</returns>
 		[HttpGet]
 		public IActionResult Get(
-			[FromRoute] int id
+			[FromRoute] int? id
 		) 
 		{
-			return new ContentResult
+			if(id == null)
 			{
-				Content = JsonConvert.SerializeObject(this._service.Get(id)),
-				ContentType = "application/json",
-				StatusCode = 200
-			};
+				return new ContentResult
+				{
+					Content = JsonConvert.SerializeObject(this._service.Get()),
+					ContentType = "application/json",
+					StatusCode = 200
+				};
+			} else
+			{
+				return new ContentResult
+				{
+					Content = JsonConvert.SerializeObject(this._service.Get((int)id)),
+					ContentType = "application/json",
+					StatusCode = 200
+				};
+			}
 		}
 
+		/// <summary>
+		/// Inserts the given category to database
+		/// </summary>
+		/// <param name="category">Category to insert</param>
+		/// <returns>Inserted Category</returns>
 		[HttpPost]
 		public IActionResult Post(
 			[FromBody] Category category
@@ -48,6 +69,11 @@ namespace Merchandising.Controllers
 			};
 		}
 
+		/// <summary>
+		/// Updates the entire category
+		/// </summary>
+		/// <param name="category">Category to update</param>
+		/// <returns>Updated category</returns>
 		[HttpPut]
 		public IActionResult Put(
 			[FromBody] Category category
@@ -61,25 +87,38 @@ namespace Merchandising.Controllers
 			};
 		}
 
+		/// <summary>
+		/// Updates given fields of the category
+		/// </summary>
+		/// <param name="category">Fields of the category to update (must include ID)</param>
+		/// <returns>Updated Category</returns>
 		[HttpPatch]
-		public IActionResult Patch()
+		public IActionResult Patch(
+			[FromBody] Category category
+		)
 		{
 			return new ContentResult
 			{
-				Content = "Patch",
-				ContentType = "application/xml",
+				Content = JsonConvert.SerializeObject(this._service.Patch(category)),
+				ContentType = "application/json",
 				StatusCode = 200
 			};
 		}
 
+		/// <summary>
+		/// Deletes the category with the given ID
+		/// </summary>
+		/// <param name="id">ID of the category to delete</param>
+		/// <returns>No content</returns>
 		[HttpDelete]
-		public IActionResult Delete()
+		public IActionResult Delete(
+			[FromRoute] int id
+		)
 		{
+			this._service.Delete(id);
 			return new ContentResult
 			{
-				Content = "Delete",
-				ContentType = "application/xml",
-				StatusCode = 200
+				StatusCode = 204
 			};
 		}
 	}

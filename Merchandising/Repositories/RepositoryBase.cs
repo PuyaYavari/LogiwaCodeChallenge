@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Merchandising.Repositories
@@ -21,6 +22,32 @@ namespace Merchandising.Repositories
         public virtual int Save()
         {
             return context.SaveChanges();
+        }
+
+        public virtual IEnumerable<Entity> Get(
+            Expression<Func<Entity, bool>> filter = null,
+            Func<IQueryable<Entity>, IOrderedQueryable<Entity>> orderBy = null,
+            string includeProperties = ""
+        )
+        {
+            IQueryable<Entity> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
 
         public virtual Entity GetByID(object id)

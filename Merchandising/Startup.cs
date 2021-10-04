@@ -32,8 +32,7 @@ namespace Merchandising
 
 			services.AddSwaggerGen();
 
-			services.AddSingleton<MerchandisingContext>();
-
+			services.AddScoped<MerchandisingContext>();
 			services.AddScoped<RepositoryCategory>();
 			services.AddScoped<ServiceCategory>();
 		}
