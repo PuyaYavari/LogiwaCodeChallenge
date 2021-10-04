@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Merchandising.Repositories
 {
-	public class RepositoryProducts : RepositoryBase<Product>
+	public class RepositoryProduct : RepositoryBase<Product>
 	{
-		public RepositoryProducts(MerchandisingContext context): base(context) { }
+		public RepositoryProduct(MerchandisingContext context): base(context) { }
 
 	}
 }

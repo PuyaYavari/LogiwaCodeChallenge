@@ -33,8 +33,12 @@ namespace Merchandising
 			services.AddSwaggerGen();
 
 			services.AddScoped<MerchandisingContext>();
+
 			services.AddScoped<RepositoryCategory>();
 			services.AddScoped<ServiceCategory>();
+
+			services.AddScoped<RepositoryProduct>();
+			services.AddScoped<ServiceProduct>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
