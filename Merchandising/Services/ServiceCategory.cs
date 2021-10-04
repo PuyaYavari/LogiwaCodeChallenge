@@ -10,7 +10,7 @@ namespace Merchandising.Services
 {
 	public class ServiceCategory
 	{
-		private RepositoryCategory _repository;
+		private readonly RepositoryCategory _repository;
 
 		public ServiceCategory(RepositoryCategory repository)
 		{
@@ -85,6 +85,7 @@ namespace Merchandising.Services
 		public void Delete(int id)
 		{
 			this._repository.Delete(id);
+			this._repository.Save();
 		}
 
 	}
