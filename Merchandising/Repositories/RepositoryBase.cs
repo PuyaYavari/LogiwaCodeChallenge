@@ -50,7 +50,9 @@ namespace Merchandising.Repositories
             }
         }
 
-        public virtual Entity GetByID(object id)
+        public virtual Entity GetByID(
+            object id
+        )
         {
             return dbSet.Find(id);
         }

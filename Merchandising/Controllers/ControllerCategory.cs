@@ -72,16 +72,18 @@ namespace Merchandising.Controllers
 		/// <summary>
 		/// Updates the entire category
 		/// </summary>
+		/// <param name="id">ID of the category to update</param>
 		/// <param name="category">Category to update</param>
 		/// <returns>Updated category</returns>
 		[HttpPut]
 		public IActionResult Put(
+			[FromRoute] int id,
 			[FromBody] Category category
 		)
 		{
 			return new ContentResult
 			{
-				Content = JsonConvert.SerializeObject(this._service.Update(category)),
+				Content = JsonConvert.SerializeObject(this._service.Update(id, category)),
 				ContentType = "application/json",
 				StatusCode = 200
 			};
@@ -90,16 +92,18 @@ namespace Merchandising.Controllers
 		/// <summary>
 		/// Updates given fields of the category
 		/// </summary>
-		/// <param name="category">Fields of the category to update (must include ID)</param>
+		/// <param name="id">ID of the category to update</param>
+		/// <param name="category">Fields of the category to update</param>
 		/// <returns>Updated Category</returns>
 		[HttpPatch]
 		public IActionResult Patch(
+			[FromRoute] int id,
 			[FromBody] Category category
 		)
 		{
 			return new ContentResult
 			{
-				Content = JsonConvert.SerializeObject(this._service.Patch(category)),
+				Content = JsonConvert.SerializeObject(this._service.Patch(id, category)),
 				ContentType = "application/json",
 				StatusCode = 200
 			};

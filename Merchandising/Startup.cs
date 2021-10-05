@@ -1,3 +1,4 @@
+using Merchandising.Middlewares;
 using Merchandising.Repositories;
 using Merchandising.Services;
 using Merchandising.Utils;
@@ -50,6 +51,7 @@ namespace Merchandising
 			}
 
 			app.UseRouting();
+			app.UseMiddleware<ErrorHandlerMiddleware>();
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
@@ -60,6 +62,7 @@ namespace Merchandising
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Merchandising Api");
 			});
+
 		}
 	}
 }

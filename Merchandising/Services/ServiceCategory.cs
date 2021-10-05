@@ -52,9 +52,11 @@ namespace Merchandising.Services
 		/// Updates a category in the database
 		/// </summary>
 		/// <param name="category">Category to update</param>
+		/// <param name="id">ID of the category to update</param>
 		/// <returns>Updated category</returns>
-		public Category Update(Category category)
+		public Category Update(int id, Category category)
 		{
+			category.Id = id;
 			Category updated = this._repository.Update(category);
 			this._repository.Save();
 			return updated;
@@ -63,11 +65,12 @@ namespace Merchandising.Services
 		/// <summary>
 		/// Updates given fields of the specified category
 		/// </summary>
-		/// <param name="category">Fields of the category to update (must include ID)</param>
+		/// <param name="category">Fields of the category to update</param>
+		/// <param name="id">ID of the category to update</param>
 		/// <returns>Updated Category</returns>
-		public Category Patch(Category category)
+		public Category Patch(int id, Category category)
 		{
-			Category categoryToUpdate = this.Get(category.Id);
+			Category categoryToUpdate = this.Get(id);
 
 			if (category.Title != null)
 				categoryToUpdate.Title = category.Title;
@@ -75,7 +78,7 @@ namespace Merchandising.Services
 			if (category.MinStock != null)
 				categoryToUpdate.MinStock = category.MinStock;
 
-			return Update(categoryToUpdate);
+			return Update(id, categoryToUpdate);
 		}
 
 		/// <summary>

@@ -26,10 +26,9 @@ namespace Merchandising.Entities
 		[JsonProperty("Stock")]
 		public int? Stock { get; set; }
 
-		[ForeignKey("Category")]
 		[Column("CATEGORY")]
 		[JsonProperty("Category")]
-		public int? Category { get; set; }
+		public virtual Category Category { get; set; }
 
 		[Column("ACTIVE")]
 		[JsonProperty("IsActive")]

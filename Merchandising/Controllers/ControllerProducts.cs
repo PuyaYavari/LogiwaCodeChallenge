@@ -21,6 +21,14 @@ namespace Merchandising.Controllers
 			this._service = service;
 		}
 
+		/// <summary>
+		/// Queries and return products from database
+		/// </summary>
+		/// <param name="id">Id of the product to query</param>
+		/// <param name="search">Search for products with this string in title, description or category name</param>
+		/// <param name="minStock">Search for products with stock larger than this parameter</param>
+		/// <param name="maxStock">Search for products with stock less than this parameter</param>
+		/// <returns>A list of products</returns>
 		[HttpGet]
 		public IActionResult Get(
 			[FromRoute] int? id,
@@ -48,6 +56,11 @@ namespace Merchandising.Controllers
 			}
 		}
 
+		/// <summary>
+		/// Inserts given product into database
+		/// </summary>
+		/// <param name="product">Product to insert</param>
+		/// <returns>Inserted product</returns>
 		[HttpPost]
 		public IActionResult Post(
 				[FromBody] Product product
@@ -60,32 +73,51 @@ namespace Merchandising.Controllers
 			};
 		}
 
+		/// <summary>
+		/// Updates product with the given Id
+		/// </summary>
+		/// <param name="id">Id of the product to update</param>
+		/// <param name="product">Updated product</param>
+		/// <returns>Updated product</returns>
 		[HttpPut]
 		public IActionResult Put(
-				[FromBody] Product product
+			[FromRoute] int id,
+			[FromBody] Product product
 		)
 		{
 			return new ContentResult
 			{
-				Content = JsonConvert.SerializeObject(this._service.Update(product)),
+				Content = JsonConvert.SerializeObject(this._service.Update(id, product)),
 				ContentType = "application/json",
 				StatusCode = 200
 			};
 		}
 
+		/// <summary>
+		/// Updates given fields of the product with the given Id
+		/// </summary>
+		/// <param name="id">Id of the product to update</param>
+		/// <param name="product">Updated fields</param>
+		/// <returns>Updated product</returns>
 		[HttpPatch]
 		public IActionResult Patch(
-				[FromBody] Product product
+			[FromRoute] int id,
+			[FromBody] Product product
 		)
 		{
 			return new ContentResult
 			{
-				Content = JsonConvert.SerializeObject(this._service.Patch(product)),
+				Content = JsonConvert.SerializeObject(this._service.Patch(id, product)),
 				ContentType = "application/json",
 				StatusCode = 200
 			};
 		}
 
+		/// <summary>
+		/// Deletes product with the given Id
+		/// </summary>
+		/// <param name="id">Id of the product to delete</param>
+		/// <returns>No Content</returns>
 		[HttpDelete]
 		public IActionResult Delete([FromRoute] int id)
 		{
