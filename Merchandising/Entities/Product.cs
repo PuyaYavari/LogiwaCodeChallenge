@@ -13,8 +13,8 @@ namespace Merchandising.Entities
 		[JsonProperty("Id")]
 		public int Id { get; set; }
 
-		[Column("TITLE")]
 		[MaxLength(200)]
+		[Column("TITLE")]
 		[JsonProperty("Title")]
 		public string Title { get; set; }
 
@@ -22,6 +22,7 @@ namespace Merchandising.Entities
 		[JsonProperty("Description")]
 		public string Description { get; set; }
 
+		[Required]
 		[Column("STOCK")]
 		[JsonProperty("Stock")]
 		public int? Stock { get; set; }
