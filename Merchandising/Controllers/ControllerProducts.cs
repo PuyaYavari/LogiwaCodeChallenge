@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Merchandising.Controllers
 {
@@ -19,6 +20,11 @@ namespace Merchandising.Controllers
 		public ControllerProducts(ServiceProduct service)
 		{
 			this._service = service;
+
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.WriteTo.Console()
+				.CreateLogger();
 		}
 
 		/// <summary>
@@ -37,6 +43,7 @@ namespace Merchandising.Controllers
 			[FromQuery] int? maxStock
 		)
 		{
+			Log.Information($"Request received. GET Products. id:{id}, search:{search}, minStock:{minStock}, maxStock:{maxStock}");
 			if (id == null)
 			{
 				return new ContentResult
@@ -64,7 +71,9 @@ namespace Merchandising.Controllers
 		[HttpPost]
 		public IActionResult Post(
 				[FromBody] Product product
-		) {
+		)
+		{
+			Log.Information($"Request received. POST Product.");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Save(product)),
@@ -85,6 +94,7 @@ namespace Merchandising.Controllers
 			[FromBody] Product product
 		)
 		{
+			Log.Information($"Request received. PUT Product. id:{id}");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Update(id, product)),
@@ -105,6 +115,7 @@ namespace Merchandising.Controllers
 			[FromBody] Product product
 		)
 		{
+			Log.Information($"Request received. PATCH Product. id:{id}");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Patch(id, product)),
@@ -121,6 +132,7 @@ namespace Merchandising.Controllers
 		[HttpDelete]
 		public IActionResult Delete([FromRoute] int id)
 		{
+			Log.Information($"Request received. DELETE Product. id:{id}");
 			this._service.Delete(id);
 			return new ContentResult
 			{

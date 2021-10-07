@@ -2,6 +2,7 @@
 using Merchandising.Enums;
 using Merchandising.Exceptions;
 using Merchandising.Repositories;
+using Merchandising.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Merchandising.Services
 {
 	public class ServiceProduct
 	{
-		private readonly RepositoryProduct _repository;
+		private readonly IRepository<Product> _repository;
 		private readonly ServiceCategory _categoryService;
 
-		public ServiceProduct(RepositoryProduct repository, ServiceCategory categoryService)
+		public ServiceProduct(IRepository<Product> repository, ServiceCategory categoryService)
 		{
 			this._repository = repository;
 			this._categoryService = categoryService;

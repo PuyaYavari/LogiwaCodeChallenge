@@ -3,6 +3,7 @@ using Merchandising.Services;
 using Merchandising.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace Merchandising.Controllers
 		public ControllerCategory(ServiceCategory service)
 		{
 			this._service = service;
+
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.WriteTo.Console()
+				.CreateLogger();
 		}
 
 		/// <summary>
@@ -30,9 +36,10 @@ namespace Merchandising.Controllers
 		[HttpGet]
 		public IActionResult Get(
 			[FromRoute] int? id
-		) 
+		)
 		{
-			if(id == null)
+			Log.Information($"Request received. GET Categpries. id:{id}");
+			if (id == null)
 			{
 				return new ContentResult
 				{
@@ -61,6 +68,7 @@ namespace Merchandising.Controllers
 			[FromBody] Category category
 		)
 		{
+			Log.Information($"Request received. POST Categpry.");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Save(category)),
@@ -81,6 +89,7 @@ namespace Merchandising.Controllers
 			[FromBody] Category category
 		)
 		{
+			Log.Information($"Request received. PUT Categpry. id:{id}");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Update(id, category)),
@@ -101,6 +110,7 @@ namespace Merchandising.Controllers
 			[FromBody] Category category
 		)
 		{
+			Log.Information($"Request received. PATCH Categpry. id:{id}");
 			return new ContentResult
 			{
 				Content = JsonConvert.SerializeObject(this._service.Patch(id, category)),
@@ -119,6 +129,7 @@ namespace Merchandising.Controllers
 			[FromRoute] int id
 		)
 		{
+			Log.Information($"Request received. DELETE Categpry. id:{id}");
 			this._service.Delete(id);
 			return new ContentResult
 			{
