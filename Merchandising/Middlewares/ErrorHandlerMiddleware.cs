@@ -1,4 +1,5 @@
-﻿using Merchandising.Exceptions;
+﻿using Merchandising.Enums;
+using Merchandising.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -33,14 +34,15 @@ namespace Merchandising.Middlewares
                 {
                     case MerchandisingException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        await response.WriteAsync(JsonSerializer.Serialize(new { code = ((MerchandisingException)error).code, message = error?.Message }));
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        await response.WriteAsync(JsonSerializer.Serialize(new { code = EnumErrors.UNKNOWN, message = error?.Message }));
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
-                await response.WriteAsync(result);
+                
             }
         }
     }

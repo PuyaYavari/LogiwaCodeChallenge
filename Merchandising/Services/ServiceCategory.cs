@@ -1,5 +1,6 @@
 ﻿using Merchandising.Entities;
 using Merchandising.Repositories;
+using Merchandising.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace Merchandising.Services
 {
 	public class ServiceCategory
 	{
-		private readonly RepositoryCategory _repository;
+		private readonly IRepository<Category> _repository;
 
-		public ServiceCategory(RepositoryCategory repository)
+		public ServiceCategory(IRepository<Category> repository)
 		{
 			this._repository = repository;
 		}

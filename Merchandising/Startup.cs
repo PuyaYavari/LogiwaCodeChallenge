@@ -1,5 +1,7 @@
+using Merchandising.Entities;
 using Merchandising.Middlewares;
 using Merchandising.Repositories;
+using Merchandising.Repositories.Contracts;
 using Merchandising.Services;
 using Merchandising.Utils;
 using Microsoft.AspNetCore.Builder;
@@ -35,10 +37,10 @@ namespace Merchandising
 
 			services.AddScoped<MerchandisingContext>();
 
-			services.AddScoped<RepositoryCategory>();
+			services.AddScoped<IRepository<Category>, RepositoryCategory>();
 			services.AddScoped<ServiceCategory>();
 
-			services.AddScoped<RepositoryProduct>();
+			services.AddScoped<IRepository<Product>, RepositoryProduct>();
 			services.AddScoped<ServiceProduct>();
 		}
 
