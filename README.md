@@ -62,6 +62,6 @@ Solution contains a test project and a sample test but tests could not be done c
 
 * Detailed unit tests
 * Detailed integration tests covering different scenarios
-* Code coverage using Cobertura or Coverlet
+* Export code coverage using Cobertura or Coverlet (Coverage has to be +%80)
 * Detailed swagger documentation
 
